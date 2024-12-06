@@ -11,7 +11,8 @@ mongoose
 .connect(process.env.MONGODB_URI ||"mongodb://0.0.0.0:27017")
 .then(() => console.log("Connected to Mongo DB"))
 .catch((error) => console.error("Could not connect to MongoDB", error));
-
+// app.use("/api/auth", require("./routes/user"))
+app.use("/api/todos", routes)
 app.listen(PORT, () => {
     console.log(`server is running at port ${PORT}`)
 })

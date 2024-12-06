@@ -1,11 +1,11 @@
 const express = require("express");
 const router = express.Router();
 const Todo = require("../models/todo");
-const { default: mongoose } = require("mongoose");
-
+const mongoose = require("mongoose");
+const auth = require("../middleware/auth");
 
 // Get all todos
-router.get("/", async (req, res) => {
+router.get("/", auth, async (req, res) => {
     try {
         const todos = await Todo.find();
         res.json(todos);
