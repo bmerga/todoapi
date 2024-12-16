@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 
 const userSchema = new mongoose.Schema({
     firstName: {
@@ -24,6 +24,11 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
         minlength: 6
+    },
+    role: {
+        type: String,
+        default: "level_one_user",
+        enum: ["admin", "level_one_user", "level_two_user"],
     },
     createdAt: {
         type: Date,

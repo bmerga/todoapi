@@ -14,10 +14,10 @@ router.get("/", auth, async (req, res) => {
     }
 });
 
-//create  a new todo
+//create a new todo 
 
 router.post("/", async (req, res) => {
-    console.log(req.body);
+    
     const todo = new Todo({
         title: req.body.title,
         description: req.body.description,
@@ -36,9 +36,9 @@ router.post("/", async (req, res) => {
    router.get("/:_id", async (req, res) => {
     
     try {
-            if(!mongoose.Types.ObjectId.isValid(req.params._id)) {
+        if(!mongoose.Types.ObjectId.isValid(req.params._id)) {
                 res.status(400).json({message:"Invalid Id Found"})
-            }
+        }
         
         const todo = await Todo.findById(req.params._id);
         if(todo){
@@ -53,7 +53,8 @@ router.post("/", async (req, res) => {
    })
 
 
-// edit with put and patch
+// edit with put (to replace the whole with new) and 
+// patch (to replace the part and keep the remaining)
 
 router.patch("/:_id", async (req, res) => {
     try {
@@ -70,7 +71,7 @@ router.patch("/:_id", async (req, res) => {
         if(req.body.completed !==null){
             todo.completed = req.body.completed;
         }
-        // to send to the database from the backend
+        // to send to the data to the database
         const updatedTodo = await todo.save()
         res.json(updatedTodo)
     } catch (error) {

@@ -3,12 +3,18 @@ const router = express.Router();
 const User = require("../models/user");
 const jwt = require("jsonwebtoken");
 
+
 // 1. Signup
 router.post("/signup", async (req, res) => {
     try {
         const existingUser = await User.findOne({ email: req.body.email });
         if (existingUser) {
             return res.status(400).json({ message: "Email already used" });
+        }
+
+const role = req.body.role || "level_one_user";
+        if(role==="admin"){
+            return res.status(403).json({message:"Cannot create an admin user through signup end point"})
         }
 
         const user = new User({
