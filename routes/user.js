@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const User = require("../models/user");
 const jwt = require("jsonwebtoken");
-
+// jsonwebtoken is used to generate a token
 
 // 1. Signup
 router.post("/signup", async (req, res) => {

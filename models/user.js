@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
+// bcrypt used to encrypt or change ur password before saving
 
 const userSchema = new mongoose.Schema({
     firstName: {

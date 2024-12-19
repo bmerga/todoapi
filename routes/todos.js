@@ -3,6 +3,8 @@ const router = express.Router();
 const Todo = require("../models/todo");
 const mongoose = require("mongoose");
 const auth = require("../middleware/auth");
+// mongoose is used to interact with the database
+const UserService = require("../services/user-service");
 
 // Get all todos
 router.get("/", auth, async (req, res) => {
@@ -93,4 +95,26 @@ router.delete("/:_id", async (req, res) => {
     }
     
 })
+const userService = new UserService();
+const asyncHandler = (fn) => (req, res, next) => {
+    Promise.resolve(fn(req, res, next)).catch(next);
+};
+(async ()=>{
+    try {
+        await userService.connect()
+        console.log("userService is connected to the database")
+    } catch (error) {
+        console.error("connection fail")
+        process.exit(1)
+    }
+    
+})();
+router.post("/fancy_user", 
+    asyncHandler( async (req, res) =>{
+    const user = await userService.createUser(req.body)
+    res.status(201).json({
+        sucess: true,
+        data: user,
+    });
+}))
 module.exports = router;
